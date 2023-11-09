@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ["@nuxtjs/tailwindcss"],
+  modules: ["@nuxtjs/tailwindcss", "@nuxtjs/strapi"],
   postcss: {
     plugins: {
       tailwindcss: {},
@@ -17,5 +17,8 @@ export default defineNuxtConfig({
   ],
   imports: {
     dirs: ["composables/**"],
+  },
+  strapi: {
+    url: "http://localhost:1337",
   },
 });
