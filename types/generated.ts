@@ -769,6 +769,39 @@ export interface ApiHomePageHomePage extends Schema.SingleType {
   };
 }
 
+export interface ApiAppFooterAppFooter extends Schema.SingleType {
+  collectionName: "app_footers";
+  info: {
+    singularName: "app-footer";
+    pluralName: "app-footers";
+    displayName: "AppFooter";
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    leftCta: Attribute.Component<"common.cta">;
+    rightCta: Attribute.Component<"common.cta">;
+    copyright: Attribute.String;
+    links: Attribute.Component<"base.link", true>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      "api::app-footer.app-footer",
+      "oneToOne",
+      "admin::user"
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      "api::app-footer.app-footer",
+      "oneToOne",
+      "admin::user"
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface BaseLink extends Schema.Component {
   collectionName: "components_base_links";
   info: {
@@ -778,6 +811,18 @@ export interface BaseLink extends Schema.Component {
   attributes: {
     path: Attribute.String;
     label: Attribute.String;
+  };
+}
+export interface CommonCta extends Schema.Component {
+  collectionName: "components_common_ctas";
+  info: {
+    displayName: "Cta";
+    icon: "apps";
+  };
+  attributes: {
+    title: Attribute.String;
+    desscription: Attribute.Text;
+    ctaLink: Attribute.Component<"base.link">;
   };
 }
 
@@ -799,10 +844,12 @@ declare module "@strapi/types" {
       "plugin::i18n.locale": PluginI18NLocale;
       "api::about-page.about-page": ApiAboutPageAboutPage;
       "api::app-header.app-header": ApiAppHeaderAppHeader;
+      "api::app-footer.app-footer": ApiAppFooterAppFooter;
       "api::home-page.home-page": ApiHomePageHomePage;
     }
     export interface Components {
       "base.link": BaseLink;
+      "common.cta": CommonCta;
     }
   }
 }
