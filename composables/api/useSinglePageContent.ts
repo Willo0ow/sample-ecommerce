@@ -1,15 +1,19 @@
-export const useSinglePageContent = (slug: string) => {
-  const { findOne } = useStrapi();
+export const useSinglePageContent = async <T>(slug: string) => {
+  const story = useState(slug);
 
   const {
     data: content,
     pending,
-    error,
     refresh,
-  } = useAsyncData(slug, async () => {
-    const homePage = await findOne(slug);
-    return homePage.data.attributes;
+  } = await useAsyncData<T>(slug, async () => {
+    const { findOne } = useStrapi();
+    const response = await findOne(slug, { populate: "*" });
+    return response.data as T;
   });
 
-  return { content, pending, error, refresh };
+  if (!story.value) {
+    refresh();
+  }
+
+  return { content, pending };
 };

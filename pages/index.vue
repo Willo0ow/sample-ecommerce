@@ -1,6 +1,8 @@
 <template>
-  <h1>Index</h1>
+  <h1 class="h-[1000px]">{{ content?.attributes.test }}</h1>
 </template>
 <script setup lang="ts">
-const { content } = useSinglePageContent("home-page");
+import { type ApiHomePageHomePage } from "@/types/generated";
+const { content } =
+  await useSinglePageContent<ApiHomePageHomePage>("home-page");
 </script>
