@@ -16,7 +16,7 @@
         <nuxt-link
           to="/"
           class="font-bold flex-none text-2xl md:text-3xl transition-all uppercase"
-          @click="toggleMobileNav"
+          @click="toggleMobileNav(true)"
           >{{ !pending && content?.attributes.appName }}</nuxt-link
         >
         <div class="w-full grow text-end hidden md:inline-block">
@@ -67,11 +67,15 @@ const links = computed(() => {
 });
 const { y: scrollHeight } = useWindowScroll();
 const isMobileNavOpen = ref(false);
-const toggleMobileNav = () => {
-  isMobileNavOpen.value = !isMobileNavOpen.value;
-  toggleScrollLock();
+const toggleMobileNav = (closeOnly = false) => {
+  isMobileNavOpen.value = closeOnly ? false : !isMobileNavOpen.value;
+  toggleScrollLock(true);
 };
-const toggleScrollLock = () => {
+const toggleScrollLock = (stopLockOnly = false) => {
+  if (stopLockOnly) {
+    document.body.style.overflow = "auto";
+    return;
+  }
   document.body.style.overflow === "hidden"
     ? (document.body.style.overflow = "auto")
     : (document.body.style.overflow = "hidden");

@@ -5,17 +5,18 @@
     :class="[side === 'right' ? 'pr-8 md:pr-16' : 'pl-8 md:pl-16']"
   >
     <div
+      class="leading-[1.5]"
       :class="[
         side === 'right'
           ? 'centered-right-half-max-width pl-8 md:pl-16'
           : 'centered-left-half-max-width pr-8 md:pr-16',
       ]"
     >
-      <h2 class="text-4xl md:text-5xl inline font-medium">
+      <h2 class="text-[2.4rem] md:text-[3.2rem] inline font-medium">
         {{ attributes.title }}
       </h2>
       <hr class="inline-block ml-3 mr-2 w-[6rem] h-[1px]" />
-      <p class="inline text-4xl md:text-5xl font-light">
+      <p class="inline text-[2.4rem] md:text-[3.2rem] font-light">
         {{ attributes.desscription }}
       </p>
       <div class="flex items-center gap-2 mt-16">
