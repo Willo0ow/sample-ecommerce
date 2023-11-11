@@ -1,5 +1,61 @@
 import type { Schema, Attribute } from "@strapi/types";
 
+export interface BaseCard extends Schema.Component {
+  collectionName: "components_base_cards";
+  info: {
+    displayName: "card";
+    icon: "cast";
+  };
+  attributes: {
+    title: Attribute.String;
+    description: Attribute.Text;
+    image: Attribute.String;
+    imageAlt: Attribute.String;
+  };
+}
+
+export interface BaseLink extends Schema.Component {
+  collectionName: "components_base_links";
+  info: {
+    displayName: "link";
+    icon: "link";
+  };
+  attributes: {
+    path: Attribute.String;
+    label: Attribute.String;
+  };
+}
+
+export interface CommonCta extends Schema.Component {
+  collectionName: "components_common_ctas";
+  info: {
+    displayName: "Cta";
+    icon: "apps";
+  };
+  attributes: {
+    title: Attribute.String;
+    desscription: Attribute.Text;
+    ctaLink: Attribute.Component<"base.link">;
+  };
+}
+
+export interface CommonGridOfCards extends Schema.Component {
+  collectionName: "components_common_grid_of_cards";
+  info: {
+    displayName: "Grid of Cards";
+    icon: "collapse";
+    description: "";
+  };
+  attributes: {
+    title: Attribute.String;
+    description: Attribute.Text;
+    items: Attribute.Component<"base.card", true>;
+    numberOfColumns: Attribute.Integer;
+    backgroundColor: Attribute.Enumeration<["red", "zinc"]>;
+    moreLink: Attribute.Component<"base.link">;
+  };
+}
+
 export interface AdminPermission extends Schema.CollectionType {
   collectionName: "admin_permissions";
   info: {
@@ -707,6 +763,39 @@ export interface ApiAboutPageAboutPage extends Schema.SingleType {
   };
 }
 
+export interface ApiAppFooterAppFooter extends Schema.SingleType {
+  collectionName: "app_footers";
+  info: {
+    singularName: "app-footer";
+    pluralName: "app-footers";
+    displayName: "AppFooter";
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    leftCta: Attribute.Component<"common.cta">;
+    rightCta: Attribute.Component<"common.cta">;
+    copyright: Attribute.String;
+    links: Attribute.Component<"base.link", true>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      "api::app-footer.app-footer",
+      "oneToOne",
+      "admin::user"
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      "api::app-footer.app-footer",
+      "oneToOne",
+      "admin::user"
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiAppHeaderAppHeader extends Schema.SingleType {
   collectionName: "app_headers";
   info: {
@@ -745,12 +834,13 @@ export interface ApiHomePageHomePage extends Schema.SingleType {
     singularName: "home-page";
     pluralName: "home-pages";
     displayName: "HomePage";
+    description: "";
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    test: Attribute.String;
+    sections: Attribute.DynamicZone<["common.grid-of-cards"]>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -766,63 +856,6 @@ export interface ApiHomePageHomePage extends Schema.SingleType {
       "admin::user"
     > &
       Attribute.Private;
-  };
-}
-
-export interface ApiAppFooterAppFooter extends Schema.SingleType {
-  collectionName: "app_footers";
-  info: {
-    singularName: "app-footer";
-    pluralName: "app-footers";
-    displayName: "AppFooter";
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    leftCta: Attribute.Component<"common.cta">;
-    rightCta: Attribute.Component<"common.cta">;
-    copyright: Attribute.String;
-    links: Attribute.Component<"base.link", true>;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      "api::app-footer.app-footer",
-      "oneToOne",
-      "admin::user"
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      "api::app-footer.app-footer",
-      "oneToOne",
-      "admin::user"
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface BaseLink extends Schema.Component {
-  collectionName: "components_base_links";
-  info: {
-    displayName: "link";
-    icon: "link";
-  };
-  attributes: {
-    path: Attribute.String;
-    label: Attribute.String;
-  };
-}
-export interface CommonCta extends Schema.Component {
-  collectionName: "components_common_ctas";
-  info: {
-    displayName: "Cta";
-    icon: "apps";
-  };
-  attributes: {
-    title: Attribute.String;
-    desscription: Attribute.Text;
-    ctaLink: Attribute.Component<"base.link">;
   };
 }
 
@@ -843,13 +876,15 @@ declare module "@strapi/types" {
       "plugin::users-permissions.user": PluginUsersPermissionsUser;
       "plugin::i18n.locale": PluginI18NLocale;
       "api::about-page.about-page": ApiAboutPageAboutPage;
-      "api::app-header.app-header": ApiAppHeaderAppHeader;
       "api::app-footer.app-footer": ApiAppFooterAppFooter;
+      "api::app-header.app-header": ApiAppHeaderAppHeader;
       "api::home-page.home-page": ApiHomePageHomePage;
     }
     export interface Components {
+      "base.card": BaseCard;
       "base.link": BaseLink;
       "common.cta": CommonCta;
+      "common.grid-of-cards": CommonGridOfCards;
     }
   }
 }
