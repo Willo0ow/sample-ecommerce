@@ -1,13 +1,13 @@
 <template>
   <header
-    class="sticky top-0 z-50 transition-colors duration-500"
+    class="sticky top-0 z-30 transition-colors duration-500 px-8"
     :class="{
       'bg-zinc-800 text-white': scrollHeight > 0,
       'bg-white text-black': scrollHeight === 0,
     }"
   >
     <nav
-      class="centered-max-width px-8"
+      class="centered-max-width"
       :class="[isMobileNavOpen ? 'h-[100vh]' : 'h-fit']"
     >
       <div
@@ -16,6 +16,7 @@
         <nuxt-link
           to="/"
           class="font-bold flex-none text-2xl md:text-3xl transition-all uppercase"
+          @click="toggleMobileNav"
           >{{ !pending && content?.attributes.appName }}</nuxt-link
         >
         <div class="w-full grow text-end hidden md:inline-block">
@@ -54,8 +55,10 @@
 </template>
 <script setup lang="ts">
 import type { ApiAppHeaderAppHeader, BaseLink } from "@/types/generated";
+
 const { content, pending } =
   await useSinglePageContent<ApiAppHeaderAppHeader>("app-header");
+
 const links = computed(() => {
   return (
     (content.value?.attributes?.links as unknown as BaseLink["attributes"][]) ||
