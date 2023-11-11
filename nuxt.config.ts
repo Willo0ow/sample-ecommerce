@@ -1,14 +1,19 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ["@nuxtjs/tailwindcss", "@nuxtjs/strapi"],
+  modules: [
+    "@nuxtjs/tailwindcss",
+    "@nuxtjs/strapi",
+    "nuxt-icon",
+    "@vueuse/nuxt",
+  ],
   postcss: {
     plugins: {
       tailwindcss: {},
       autoprefixer: {},
     },
   },
-  css: ["~/assets/css/main.css"],
+  css: ["~/assets/css/main.scss"],
   components: [
     {
       path: "~/components",
