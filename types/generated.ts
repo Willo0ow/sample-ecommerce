@@ -73,6 +73,25 @@ export interface CommonGridOfCards extends Schema.Component {
   };
 }
 
+export interface CommonTestimonials extends Schema.Component {
+  collectionName: "components_common_testimonials";
+  info: {
+    displayName: "Testimonials";
+    icon: "thumbUp";
+    description: "";
+  };
+  attributes: {
+    title: Attribute.String;
+    description: Attribute.Text;
+    withImage: Attribute.Boolean;
+    items: Attribute.Relation<
+      "common.testimonials",
+      "oneToMany",
+      "api::testimonial.testimonial"
+    >;
+  };
+}
+
 export interface AdminPermission extends Schema.CollectionType {
   collectionName: "admin_permissions";
   info: {
@@ -861,7 +880,9 @@ export interface ApiHomePageHomePage extends Schema.SingleType {
   };
   options: { x; draftAndPublish: true };
   attributes: {
-    sections: Attribute.DynamicZone<["common.grid-of-cards"]>;
+    sections: Attribute.DynamicZone<
+      ["common.cta", "common.grid-of-cards", "common.testimonials"]
+    >;
     route: Attribute.Relation<
       "api::home-page.home-page",
       "oneToOne",
@@ -954,6 +975,40 @@ export interface ApiRouteRoute extends Schema.CollectionType {
   };
 }
 
+export interface ApiTestimonialTestimonial extends Schema.CollectionType {
+  collectionName: "testimonials";
+  info: {
+    singularName: "testimonial";
+    pluralName: "testimonials";
+    displayName: "testimonial";
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    position: Attribute.String;
+    description: Attribute.Text;
+    imageUrl: Attribute.String;
+    imageAlt: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      "api::testimonial.testimonial",
+      "oneToOne",
+      "admin::user"
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      "api::testimonial.testimonial",
+      "oneToOne",
+      "admin::user"
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module "@strapi/types" {
   export module Shared {
     export interface ContentTypes {
@@ -976,6 +1031,7 @@ declare module "@strapi/types" {
       "api::home-page.home-page": ApiHomePageHomePage;
       "api::project.project": ApiProjectProject;
       "api::route.route": ApiRouteRoute;
+      "api::testimonial.testimonial": ApiTestimonialTestimonial;
     }
     export interface Components {
       "base.card": BaseCard;
@@ -983,6 +1039,7 @@ declare module "@strapi/types" {
       "base.link": BaseLink;
       "common.cta": CommonCta;
       "common.grid-of-cards": CommonGridOfCards;
+      "common.testimonials": CommonTestimonials;
     }
   }
 }
