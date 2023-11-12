@@ -6,6 +6,7 @@ export default defineNuxtConfig({
     "@nuxtjs/strapi",
     "nuxt-icon",
     "@vueuse/nuxt",
+    "nuxt-swiper",
   ],
   postcss: {
     plugins: {
