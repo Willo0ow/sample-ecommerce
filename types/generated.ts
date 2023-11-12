@@ -1,5 +1,4 @@
 import type { Schema, Attribute } from "@strapi/types";
-
 export interface BaseCard extends Schema.Component {
   collectionName: "components_base_cards";
   info: {
@@ -14,15 +13,29 @@ export interface BaseCard extends Schema.Component {
   };
 }
 
+export interface BaseImage extends Schema.Component {
+  collectionName: "components_base_images";
+  info: {
+    displayName: "image";
+    icon: "picture";
+  };
+  attributes: {
+    url: Attribute.String;
+    altText: Attribute.String;
+  };
+}
+
 export interface BaseLink extends Schema.Component {
   collectionName: "components_base_links";
   info: {
     displayName: "link";
     icon: "link";
+    description: "";
   };
   attributes: {
     path: Attribute.String;
     label: Attribute.String;
+    route: Attribute.Relation<"base.link", "oneToOne", "api::route.route">;
   };
 }
 
@@ -49,10 +62,14 @@ export interface CommonGridOfCards extends Schema.Component {
   attributes: {
     title: Attribute.String;
     description: Attribute.Text;
-    items: Attribute.Component<"base.card", true>;
     numberOfColumns: Attribute.Integer;
     backgroundColor: Attribute.Enumeration<["red", "zinc"]>;
     moreLink: Attribute.Component<"base.link">;
+    projects: Attribute.Relation<
+      "common.grid-of-cards",
+      "oneToMany",
+      "api::project.project"
+    >;
   };
 }
 
@@ -739,12 +756,18 @@ export interface ApiAboutPageAboutPage extends Schema.SingleType {
     singularName: "about-page";
     pluralName: "about-pages";
     displayName: "AboutPage";
+    description: "";
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
     test: Attribute.String;
+    route: Attribute.Relation<
+      "api::about-page.about-page",
+      "oneToOne",
+      "api::route.route"
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -836,11 +859,17 @@ export interface ApiHomePageHomePage extends Schema.SingleType {
     displayName: "HomePage";
     description: "";
   };
-  options: {
-    draftAndPublish: true;
-  };
+  options: { x; draftAndPublish: true };
   attributes: {
     sections: Attribute.DynamicZone<["common.grid-of-cards"]>;
+    route: Attribute.Relation<
+      "api::home-page.home-page",
+      "oneToOne",
+      "api::route.route"
+    >;
+    heroTitle: Attribute.String;
+    heroDescription: Attribute.Text;
+    heroImage: Attribute.Component<"base.image">;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -852,6 +881,72 @@ export interface ApiHomePageHomePage extends Schema.SingleType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       "api::home-page.home-page",
+      "oneToOne",
+      "admin::user"
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiProjectProject extends Schema.CollectionType {
+  collectionName: "projects";
+  info: {
+    singularName: "project";
+    pluralName: "projects";
+    displayName: "project";
+    description: "";
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    title: Attribute.String;
+    description: Attribute.Text;
+    summaryImage: Attribute.Component<"base.image">;
+    imageUrl: Attribute.String;
+    imageAlt: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      "api::project.project",
+      "oneToOne",
+      "admin::user"
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      "api::project.project",
+      "oneToOne",
+      "admin::user"
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiRouteRoute extends Schema.CollectionType {
+  collectionName: "routes";
+  info: {
+    singularName: "route";
+    pluralName: "routes";
+    displayName: "route";
+    description: "";
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    path: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      "api::route.route",
+      "oneToOne",
+      "admin::user"
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      "api::route.route",
       "oneToOne",
       "admin::user"
     > &
@@ -879,9 +974,12 @@ declare module "@strapi/types" {
       "api::app-footer.app-footer": ApiAppFooterAppFooter;
       "api::app-header.app-header": ApiAppHeaderAppHeader;
       "api::home-page.home-page": ApiHomePageHomePage;
+      "api::project.project": ApiProjectProject;
+      "api::route.route": ApiRouteRoute;
     }
     export interface Components {
       "base.card": BaseCard;
+      "base.image": BaseImage;
       "base.link": BaseLink;
       "common.cta": CommonCta;
       "common.grid-of-cards": CommonGridOfCards;

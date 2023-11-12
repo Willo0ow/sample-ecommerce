@@ -1,5 +1,10 @@
 <template>
   <div v-if="content?.attributes">
+    <HomeHero
+      :title="content.attributes.heroTitle"
+      :description="content.attributes.heroDescription"
+      :image="content.attributes.heroImage"
+    />
     <component
       :is="getSectionComponent(section.__component)"
       v-for="section in content?.attributes?.sections"
