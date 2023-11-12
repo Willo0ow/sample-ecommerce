@@ -25,7 +25,11 @@
           section.numberOfColumns == 4 && 'md:grid-cols-2',
         ]"
       >
-        <ImageCard v-for="item in section.items" :key="item.id" :card="item" />
+        <ImageCard
+          v-for="item in section.projects.data"
+          :key="item.id"
+          :card="item.attributes"
+        />
       </div>
     </div>
   </section>

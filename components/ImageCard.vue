@@ -1,7 +1,7 @@
 <template>
   <div>
     <img
-      :src="card.image"
+      :src="card.imageUrl"
       :alt="card.imageAlt"
       class="mb-12 aspect-[16/12] object-cover"
     />
