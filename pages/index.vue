@@ -15,14 +15,13 @@
 </template>
 <script setup lang="ts">
 import GridOfCards from "@/components/GridOfCards.vue";
+import TestimonialSlider from "~/components/TestimonialSlider.vue";
 import { type ApiHomePageHomePage } from "@/types/generated";
-const { content } = await useHomePageContent<ApiHomePageHomePage>("home-page");
+const { content } = await useHomePageContent<ApiHomePageHomePage>();
 
 const getSectionComponent = (strapiComponent: string) => {
-  console.log(strapiComponent);
-
-  // if (strapiComponent === "common.grid-of-cards")
-  return GridOfCards;
+  if (strapiComponent === "common.grid-of-cards") return GridOfCards;
+  if (strapiComponent === "common.testimonials") return TestimonialSlider;
 };
 </script>
 ń

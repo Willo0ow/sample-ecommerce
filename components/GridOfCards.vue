@@ -8,8 +8,8 @@
         <span class="flex items-center mt-4 mb-20 md:mt-0 md:mb-0">
           <nuxt-link
             class="uppercase text-3xl md:text-4xl mr-4"
-            :to="section.moreLink.path"
-            >{{ section.moreLink.label }}</nuxt-link
+            :to="section.moreLink?.path"
+            >{{ section.moreLink?.label }}</nuxt-link
           >
           <Icon name="ic:baseline-arrow-forward" size="24px" />
         </span>
