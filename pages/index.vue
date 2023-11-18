@@ -16,12 +16,14 @@
 <script setup lang="ts">
 import GridOfCards from "@/components/GridOfCards.vue";
 import TestimonialSlider from "~/components/TestimonialSlider.vue";
+import Expandable from "~/components/Expandable.vue";
 import { type ApiHomePageHomePage } from "@/types/generated";
 const { content } = await useHomePageContent<ApiHomePageHomePage>();
 
 const getSectionComponent = (strapiComponent: string) => {
   if (strapiComponent === "common.grid-of-cards") return GridOfCards;
   if (strapiComponent === "common.testimonials") return TestimonialSlider;
+  if (strapiComponent === "common.expandable") return Expandable;
 };
 </script>
 ń

@@ -13,6 +13,37 @@ export interface BaseCard extends Schema.Component {
   };
 }
 
+export interface BaseTextWithTitle extends Schema.Component {
+  collectionName: "components_base_text_with_titles";
+  info: {
+    displayName: "TextWithTitle";
+    icon: "archive";
+    description: "";
+  };
+  attributes: {
+    title: Attribute.String;
+    description: Attribute.RichText;
+    linksTo: Attribute.Relation<
+      "base.text-with-title",
+      "oneToOne",
+      "api::route.route"
+    >;
+  };
+}
+
+export interface CommonExpandable extends Schema.Component {
+  collectionName: "components_common_expandables";
+  info: {
+    displayName: "Expandable";
+    icon: "bulletList";
+    description: "";
+  };
+  attributes: {
+    title: Attribute.String;
+    items: Attribute.Component<"base.text-with-title", true>;
+  };
+}
+
 export interface BaseImage extends Schema.Component {
   collectionName: "components_base_images";
   info: {
@@ -878,10 +909,15 @@ export interface ApiHomePageHomePage extends Schema.SingleType {
     displayName: "HomePage";
     description: "";
   };
-  options: { x; draftAndPublish: true };
+  options: { draftAndPublish: true };
   attributes: {
     sections: Attribute.DynamicZone<
-      ["common.cta", "common.grid-of-cards", "common.testimonials"]
+      [
+        "common.cta",
+        "common.grid-of-cards",
+        "common.testimonials",
+        "common.expandable",
+      ]
     >;
     route: Attribute.Relation<
       "api::home-page.home-page",
@@ -1037,9 +1073,11 @@ declare module "@strapi/types" {
       "base.card": BaseCard;
       "base.image": BaseImage;
       "base.link": BaseLink;
+      "base.text-with-title": BaseTextWithTitle;
       "common.cta": CommonCta;
       "common.grid-of-cards": CommonGridOfCards;
       "common.testimonials": CommonTestimonials;
+      "common.expandable": CommonExpandable;
     }
   }
 }
