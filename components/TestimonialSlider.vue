@@ -1,5 +1,5 @@
 <template>
-  <section class="py-24 md:py-48 px-12 md:px-20">
+  <section class="py-24 md:py-48 px-12 md:px-20 testimonial-slider">
     <div class="centered-max-width relative">
       <button
         class="prev-button absolute top-1/2 -left-16 transform -translate-y-1/2 h-full"
@@ -38,7 +38,9 @@ defineProps<{
 }>();
 </script>
 <style scoped lang="scss">
-.swiper-button-next {
-  display: none !important;
+.testimonial-slider {
+  .swiper-wrapper {
+    align-items: center;
+  }
 }
 </style>

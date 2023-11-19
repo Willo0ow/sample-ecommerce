@@ -135,6 +135,25 @@ export interface CommonPartnersLogos extends Schema.Component {
   };
 }
 
+export interface CommonFeaturedItems extends Schema.Component {
+  collectionName: "components_common_featured_items";
+  info: {
+    displayName: "Featured Items";
+    icon: "information";
+  };
+  attributes: {
+    header: Attribute.String;
+    title: Attribute.String;
+    content: Attribute.Text;
+    ctaLink: Attribute.Component<"base.link">;
+    projects: Attribute.Relation<
+      "common.featured-items",
+      "oneToMany",
+      "api::project.project"
+    >;
+  };
+}
+
 export interface AdminPermission extends Schema.CollectionType {
   collectionName: "admin_permissions";
   info: {
@@ -930,6 +949,7 @@ export interface ApiHomePageHomePage extends Schema.SingleType {
         "common.testimonials",
         "common.expandable",
         "common.partners-logos",
+        "common.featured-items",
       ]
     >;
     route: Attribute.Relation<
@@ -1092,6 +1112,7 @@ declare module "@strapi/types" {
       "common.testimonials": CommonTestimonials;
       "common.expandable": CommonExpandable;
       "common.partners-logos": CommonPartnersLogos;
+      "common.featured-items": CommonFeaturedItems;
     }
   }
 }

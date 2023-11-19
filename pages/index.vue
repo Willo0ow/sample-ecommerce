@@ -18,6 +18,7 @@ import GridOfCards from "@/components/GridOfCards.vue";
 import TestimonialSlider from "~/components/TestimonialSlider.vue";
 import Expandable from "~/components/Expandable.vue";
 import PartnersSection from "~/components/PartnersSection.vue";
+import FeaturedItems from "~/components/FeaturedItems.vue";
 import { type ApiHomePageHomePage } from "@/types/generated";
 
 const { content } = await useHomePageContent<ApiHomePageHomePage>();
@@ -27,6 +28,7 @@ const getSectionComponent = (strapiComponent: string) => {
   if (strapiComponent === "common.testimonials") return TestimonialSlider;
   if (strapiComponent === "common.expandable") return Expandable;
   if (strapiComponent === "common.partners-logos") return PartnersSection;
+  if (strapiComponent === "common.featured-items") return FeaturedItems;
 };
 </script>
 ń
