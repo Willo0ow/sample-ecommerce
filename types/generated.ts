@@ -122,6 +122,18 @@ export interface CommonTestimonials extends Schema.Component {
     >;
   };
 }
+export interface CommonPartnersLogos extends Schema.Component {
+  collectionName: "components_common_partners_logos";
+  info: {
+    displayName: "PartnersLogos";
+    icon: "collapse";
+  };
+  attributes: {
+    title: Attribute.String;
+    logos: Attribute.Media;
+    bottomLink: Attribute.Component<"base.link">;
+  };
+}
 
 export interface AdminPermission extends Schema.CollectionType {
   collectionName: "admin_permissions";
@@ -917,6 +929,7 @@ export interface ApiHomePageHomePage extends Schema.SingleType {
         "common.grid-of-cards",
         "common.testimonials",
         "common.expandable",
+        "common.partners-logos",
       ]
     >;
     route: Attribute.Relation<
@@ -1078,6 +1091,7 @@ declare module "@strapi/types" {
       "common.grid-of-cards": CommonGridOfCards;
       "common.testimonials": CommonTestimonials;
       "common.expandable": CommonExpandable;
+      "common.partners-logos": CommonPartnersLogos;
     }
   }
 }
