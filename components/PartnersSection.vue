@@ -32,8 +32,3 @@ const getImageSrc = (imageUrl: string) => {
   return "http://localhost:1337" + imageUrl;
 };
 </script>
-<style>
-.swiper-wrapper {
-  align-items: center;
-}
-</style>
