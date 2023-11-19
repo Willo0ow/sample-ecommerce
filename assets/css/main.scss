@@ -47,3 +47,8 @@ body {
   font-size: 1.6rem;
   letter-spacing: -0.02em;
 }
+.testimonial-slider {
+  .swiper-wrapper {
+    align-items: center !important;
+  }
+}

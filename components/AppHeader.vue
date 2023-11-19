@@ -28,9 +28,16 @@
             active-class="border-b-2 border-red-600"
             >{{ link.label }}</nuxt-link
           >
+          <BaseButton to="/contact" class="w-full text-center"
+            >Contact us</BaseButton
+          >
         </div>
         <div class="inline-block md:hidden grow text-end">
-          <Icon name="ic:baseline-menu" size="24px" @click="toggleMobileNav" />
+          <Icon
+            name="ic:baseline-menu"
+            size="24px"
+            @click="toggleMobileNav(false)"
+          />
         </div>
       </div>
       <div
@@ -43,12 +50,17 @@
               :to="link.path"
               class="uppercase font-medium hover:text-red-600"
               active-class="border-b-2 border-red-600"
-              @click="toggleMobileNav"
+              @click="toggleMobileNav(false)"
               >{{ link.label }}</nuxt-link
             >
           </li>
         </ul>
-        <BaseButton class="w-full">Contact us</BaseButton>
+        <BaseButton
+          to="/contact"
+          @click="toggleMobileNav(false)"
+          class="w-full text-center"
+          >Contact us</BaseButton
+        >
       </div>
     </nav>
   </header>
@@ -68,8 +80,13 @@ const links = computed(() => {
 const { y: scrollHeight } = useWindowScroll();
 const isMobileNavOpen = ref(false);
 const toggleMobileNav = (closeOnly = false) => {
-  isMobileNavOpen.value = closeOnly ? false : !isMobileNavOpen.value;
-  toggleScrollLock(true);
+  if (closeOnly) {
+    isMobileNavOpen.value = false;
+    toggleScrollLock(true);
+    return;
+  }
+  isMobileNavOpen.value = !isMobileNavOpen.value;
+  toggleScrollLock();
 };
 const toggleScrollLock = (stopLockOnly = false) => {
   if (stopLockOnly) {

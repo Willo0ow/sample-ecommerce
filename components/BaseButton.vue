@@ -12,7 +12,6 @@
 const props = defineProps<{
   to?: string;
   href?: string;
-  classes?: string;
 }>();
 
 const tag = computed(() => {

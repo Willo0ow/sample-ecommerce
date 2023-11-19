@@ -37,10 +37,3 @@ defineProps<{
   section: CommonTestimonials;
 }>();
 </script>
-<style scoped lang="scss">
-.testimonial-slider {
-  .swiper-wrapper {
-    align-items: center;
-  }
-}
-</style>

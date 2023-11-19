@@ -931,6 +931,39 @@ export interface ApiAppHeaderAppHeader extends Schema.SingleType {
       Attribute.Private;
   };
 }
+export interface ApiContactPageContactPage extends Schema.SingleType {
+  collectionName: "contact_pages";
+  info: {
+    singularName: "contact-page";
+    pluralName: "contact-pages";
+    displayName: "Contact Page";
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    route: Attribute.Relation<
+      "api::contact-page.contact-page",
+      "oneToOne",
+      "api::route.route"
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      "api::contact-page.contact-page",
+      "oneToOne",
+      "admin::user"
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      "api::contact-page.contact-page",
+      "oneToOne",
+      "admin::user"
+    > &
+      Attribute.Private;
+  };
+}
 
 export interface ApiHomePageHomePage extends Schema.SingleType {
   collectionName: "home_pages";
@@ -1098,6 +1131,7 @@ declare module "@strapi/types" {
       "api::app-footer.app-footer": ApiAppFooterAppFooter;
       "api::app-header.app-header": ApiAppHeaderAppHeader;
       "api::home-page.home-page": ApiHomePageHomePage;
+      "api::contact-page.contact-page": ApiContactPageContactPage;
       "api::project.project": ApiProjectProject;
       "api::route.route": ApiRouteRoute;
       "api::testimonial.testimonial": ApiTestimonialTestimonial;
