@@ -19,9 +19,14 @@ export const useHomePageContent = async <T>() => {
       "populate[sections][on][common.partners-logos][populate][bottomLink][populate]=%2A";
     const partnersLogos =
       "populate[sections][on][common.partners-logos][populate][logos][populate]=%2A";
+    const featuredItems =
+      "populate[sections][on][common.featured-items][populate]=%2A";
+    // TODO populate cta route
+      const featuredItemsLink =
+      "populate[sections][on][common.featured-items][populate][ctaLink][populate]=%2A";
 
     const response = await $fetch<T>(
-      `http://localhost:1337/api/home-page?${heroImage}&${testimonials}&${gridOfCards}&${expandables}&${partnersLink}&${partners}&${partnersLogos}`
+      `http://localhost:1337/api/home-page?${heroImage}&${testimonials}&${gridOfCards}&${expandables}&${partnersLink}&${partners}&${partnersLogos}&${featuredItems}`
     );
 
     return response.data;
